@@ -52,7 +52,7 @@ public class ReplyController {
             @Valid @RequestBody ReplyDTO replyDTO,
             BindingResult bindingResult)throws BindException{
 
-        log.info(replyDTO);
+        log.info("ReplyController의 register()의 replyDTO : " + replyDTO);
 
         if(bindingResult.hasErrors()){
             throw new BindException(bindingResult);
@@ -61,7 +61,7 @@ public class ReplyController {
         Map<String, Long> resultMap = new HashMap<>();
 
         Long rno = replyService.register(replyDTO);
-
+        log.info("ReplyController의 register()의 rno : " + rno);
         resultMap.put("rno",rno);
 
         return resultMap;
@@ -73,6 +73,7 @@ public class ReplyController {
                                              PageRequestDTO pageRequestDTO){
 
         PageResponseDTO<ReplyDTO> responseDTO = replyService.getListOfBoard(bno, pageRequestDTO);
+        log.info("ReplyController의 getList()의 bno : " + bno);
 
         return responseDTO;
     }

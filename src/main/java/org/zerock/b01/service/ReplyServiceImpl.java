@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Log4j2
-public class ReplyServiceImpl implements ReplyService{
+public class ReplyServiceImpl implements ReplyService {
 
     private final ReplyRepository replyRepository;
 
@@ -71,7 +71,7 @@ public class ReplyServiceImpl implements ReplyService{
     @Override
     public PageResponseDTO<ReplyDTO> getListOfBoard(Long bno, PageRequestDTO pageRequestDTO) {
 
-        Pageable pageable = PageRequest.of(pageRequestDTO.getPage() <=0? 0: pageRequestDTO.getPage() -1,
+        Pageable pageable = PageRequest.of(pageRequestDTO.getPage() <= 0 ? 0 : pageRequestDTO.getPage() - 1,
                 pageRequestDTO.getSize(),
                 Sort.by("rno").ascending());
 
@@ -80,11 +80,14 @@ public class ReplyServiceImpl implements ReplyService{
         List<ReplyDTO> dtoList =
                 result.getContent().stream().map(reply -> modelMapper.map(reply, ReplyDTO.class))
                         .collect(Collectors.toList());
+        log.info("ReplyServiceImple의 getListOfBoard()의 bno : " + bno);
+        log.info("ReplyServiceImple의 getListOfBoard()의 result : " + result.getContent());
+        log.info("ReplyServiceImple의 getListOfBoard()의 dtoList" + dtoList);
 
         return PageResponseDTO.<ReplyDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(dtoList)
-                .total((int)result.getTotalElements())
+                .total((int) result.getTotalElements())
                 .build();
     }
 }
